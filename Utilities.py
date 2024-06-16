@@ -1,6 +1,36 @@
-# Show plots inline, and load main getdist plot module and samples class
-import sys, os
-sys.path.insert(0,os.path.realpath(os.path.join(os.getcwd(),'..')))
+'''File that contains utility functions for various tasks in the project.
+
+
+Functions:
+
+- get_keys(fields): Generate combinations of the given fields with 'x' as a delimiter.
+- get_Gauss_keys_v3(fields): Generate keys for Gaussian likelihood based on the combinations of given fields.
+- find_spectrum(input_dict, lmax, lmin, key): Find a spectrum in a given dictionary.
+- txt2dict(txt, mapping=None, apply_ellfactor=None): Takes a txt file and convert it to a dictionary.
+- print_errors(variables_dictionary, fid_values_dictionary, errors): Print the errors in a nice way.
+- get_column_headers_with_index(file_path): Get the column headers with their index from a file.
+- remove_symmetric_duplicates(obs_dict): Remove symmetric duplicates from the dictionary of observables.
+- get_mapping(file_path, n_fields): Generates a mapping of column headers to their indices for cosmological data files.
+- extract_fiducial_cl_from_CAMB(file_path_unlens, file_path_lens, column_mapping, n_counts, ls): Extracts and processes the fiducial cosmological power spectrum from CAMB output files.
+- load_data(epsilon, var, col_num, base_path, directory_structure, lensed=False): Loads data from a specified file based on the given parameters.
+- load_and_process_data(var, epsilon, obs, col_num, lensed, base_path, directory_structure): Loads and processes data for a given variable and perturbation.
+- process_cl_data(vars, epsilon_values, column_mapping, ls, base_path, directory_structure): Processes power spectrum data for multiple cosmological variables across different perturbations in parallel.
+- count_ws(fields): This function takes a list of strings 'fields' and returns the count of how many start with 'W'.
+- filter_dictionary(data, exclude_chars, separator='x'): Filters a dictionary by removing entries based on specified exclusion criteria and ensuring uniqueness of symmetric keys.
+
+
+
+
+
+
+'''
+
+
+
+
+
+
+
 
 import numpy as np
 import Derivate_coeff as dc
@@ -386,4 +416,63 @@ def count_ws(fields):
     # 'field.startswith('W')' evaluates to True if the field name starts with 'W'
     # sum(1 for ...) sums up 1 for each field that starts with 'W', effectively counting them
     return sum(1 for field in fields if field.startswith('W'))
+
+
+
+
+
+
+def filter_dictionary(data, exclude_chars, separator='x'):
+    """
+    Filters a dictionary by removing entries based on specified exclusion criteria and ensuring uniqueness of symmetric keys.
+
+    Parameters:
+    - data (dict): The dictionary to be filtered.
+    - exclude_chars (list of str): Characters that if found in a key, will lead to its exclusion from the final dictionary.
+    - separator (str, optional): A character used to split the keys into components to identify symmetric entries. Default is 'x'.
+
+    The function operates in two main steps:
+    1. Exclusion of keys: Removes any key-value pairs where the key contains any of the characters specified in `exclude_chars`.
+    2. Symmetry reduction: Further filters the dictionary by removing symmetric entries based on the separator. For instance, for a key "AxB", a subsequent key "BxA" would be excluded if already considered. This is done by sorting the components of each key and ensuring each unique combination appears only once.
+
+    Returns:
+    - dict: A filtered dictionary with keys that do not contain specified characters and do not have symmetric duplicates.
+
+    Example usage:
+    >>> data = {'AxB': 1, 'BxA': 2, 'CxD': 3, 'DxC': 4, 'ExF': 5}
+    >>> filter_dictionary(data, ['E'], 'x')
+    {'AxB': 1, 'CxD': 3}
+    """
+    # Create a dictionary excluding keys that contain any character from `exclude_chars`
+    intermediate_dict = {key: value for key, value in data.items() if not any(char in key for char in exclude_chars)}
+    
+    # Prepare to collect unique combinations of key components
+    final_dict = {}
+    seen_pairs = set()
+    
+    for key in intermediate_dict:
+        # Split the key into components by the separator
+        components = key.split(separator)
+        
+        # Sort the components to standardize their order, making them comparable
+        sorted_components = tuple(sorted(components))
+        
+        # If this sorted tuple hasn't been added yet, proceed to add it
+        if sorted_components not in seen_pairs:
+            # Mark this combination as seen
+            seen_pairs.add(sorted_components)
+            # Add the original key and its value to the final dictionary
+            final_dict[key] = intermediate_dict[key]
+
+    # Return the dictionary filtered from duplicates and excluded characters
+    return final_dict
+
+
+
+
+
+
+
+
+
 

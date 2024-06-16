@@ -1,4 +1,18 @@
-# Show plots inline, and load main getdist plot module and samples class
+''' File containing functions to compute derivatives of cosmological power spectra and related quantities.
+
+Functions:
+- polynomial_derivative: Computes the polynomial derivative of cosmological power spectra with respect to various cosmological parameters.
+- finite_coeff_derivatives: Computes the derivatives for all parameters in cl_data using finite difference coefficients.
+- richardson_extrapolation: Computes the derivatives for all parameters in cl_data using Richardson extrapolation.
+
+'''
+
+
+
+
+
+
+
 import sys, os
 sys.path.insert(0,os.path.realpath(os.path.join(os.getcwd(),'..')))
 
@@ -100,7 +114,7 @@ def polynomial_derivative(cl_data, map, vars, fid_values, epsilon, scaling_facto
 
 
 
-def compute_derivatives(n_probes, cl_data, steps, map, vars, scaling=True):
+def finite_coeff_derivatives(n_probes, cl_data, steps, map, vars, scaling=True):
     # Initialize output structures
     key = list(cl_data.keys())[0]
     ell = np.arange(cl_data[key].shape[0]) + 2  # Assuming ls starts at 2

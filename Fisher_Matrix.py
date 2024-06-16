@@ -1,3 +1,25 @@
+'''File containing functions to compute the Fisher matrix and related quantities for cosmological analyses. It is specificcaly designed for Angular Power Spectra
+
+Functions:
+
+- compute_fisher_analysis: Compute the Fisher analysis based on the provided configuration.
+- compute_fskies: Computes the fskies dictionary based on input parameters and a choice to set cross fsky values to the minimum of the two fields' fsky values.
+- sigma: Define the covariance matrix for the Gaussian case.
+- get_masked_sigma: Mask the covariance matrix for the Gaussian case in certain ranges of multipoles.
+- inv_sigma: Invert the covariance matrix of the Gaussian case.
+- get_masked_derivates: Apply the mask to the derivative of the power spectra.
+- get_fisher: Compute the Fisher matrix, covariance, and errors.
+
+'''
+
+
+
+
+
+
+
+
+
 # Show plots inline, and load main getdist plot module and samples class
 import sys, os
 sys.path.insert(0,os.path.realpath(os.path.join(os.getcwd(),'..')))

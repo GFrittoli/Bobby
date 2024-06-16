@@ -1,3 +1,47 @@
+''' File that contains the Fisher matrix calculation for supernovae data.
+
+Functions:
+- calculate_bin_width(z_min, z_max, number_of_bins): Calculates the width of a redshift bin.
+- calculate_number_of_bins(z_min, z_max, desired_bin_width): Calculates the number of bins based on the desired width.
+- init_random(): Initializes the random seed.
+- random_uniform(start, end): Generates a random number between the start and end values.
+- random_gaussian(mean, sigma): Generates a random number from a Gaussian distribution.
+- generate_sn_mock_data(P, FP): Generates a mock dataset of supernovae with redshift, color, and stretch values.
+- calculate_luminosity_distance(As_func,ns_func,H0_func,ombh2_func,omch2_func,tau_func,redshifts): Calculates the luminosity distance for a given set of redshifts.
+- generate_sn_mock_covariance(P, FP, redshift): Generates a mock covariance matrix for the supernova data.
+- observed_sn_magnitude(P, FP, redshift, color, stretch, num): Calculates the observed magnitude of a set of supernovae.
+- calculate_derivative(camb_params, FP, redshift, color, stretch, num, param_to_vary, epsilon): Calculates the derivative of supernova magnitude with respect to a specified parameter.
+- fisher_sn(P, FP, params, outroot=None): Computes the SN Fisher matrix using Monte Carlo simulations.
+
+
+
+
+IN PROGRESS: This file is currently in progress and may not be fully functional or complete. Please check back later for updates.
+
+
+
+'''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import sys, platform, os
 
 camb_installation_path = '/home/guglielmo/Desktop/eftcamb_new_1'  
