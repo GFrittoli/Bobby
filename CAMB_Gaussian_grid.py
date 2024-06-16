@@ -301,7 +301,7 @@ def generate_spectra_for_bias(fiducial_params, bz_step_fid, variations_lists, dn
 
 
 
-def compute_all_spectra_gaussian(listed_params, fiducial_params, galaxy_info, epsilon, path_save, compute_fiducial=True, compute_only="all"):
+def compute_all_spectra(listed_params, fiducial_params, galaxy_info, epsilon, path_save, compute_fiducial=True, compute_only="all"):
     """
     Compute spectra for all parameters and biases, producing the fiducial spectra only once.
 
